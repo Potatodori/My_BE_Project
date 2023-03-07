@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  login_id String @db.VarChar(20)
+  password String @db.VarChar(100)
+  nickname String @db.VarChar(30)
+  name String @db.VarChar(30)
+  birth DateTime
+  phoneNum String @db.Char(11)
+  selfIntroduce String? @db.LongText
+  userimage UserImage?
+}
+
+model UserImage {
+id String @id @default(uuid())
+ImageURL String? @db.VarChar(100)
+Userid String @unique//FK
+User User@relation(fields: [Userid], references: [id])
+}
+
+model UserTown {
+id String @id @default(uuid())
+town String @db.VarChar(30)
+Userid String //FK
+
+}
+
+
+model Task {
+id String @id @default(uuid())
+  title String @db.VarChar(90)
+  description String @db.LongText
+  cost Int
+  location String @db.VarChar(50)
+  startsAt DateTime
+  finished Boolean
+Userid String //FK
+TaskCategoryid String //FK
+}
+
+// model AppliedTask {
+//   Userid String //FK
+//   Taskid String //FK
+// }
+
+// model TasktoDo {
+//   Userid String //FK
+//   Taskid String //FK
+// }
+
+// model ProcessedTask {
+//   Userid String //FK
+//   Taskid String //FK
+// }
+
+
+model TaskCategory {
+id String @id @default(uuid())
+  category String @db.VarChar(30)
+}
+
+model TaskImage {
+id String @id @default(uuid())
+  ImageURL String? @db.VarChar(100)
+ Taskid String //FK
+}
+
+model ChattingRoom {
+id String @id @default(uuid())
+}
+
+model ChattingMessage {
+id String @id @default(uuid())
+  message String? @db.LongText
+  sendTime DateTime?
+  isRead Boolean?
+}
+
+model EmployeeReview {
+id String @id @default(uuid())
+  title String @db.VarChar(50)
+  description String @db.LongText
+  goodAtWork Boolean
+  goodAtTime Boolean
+  goodAtManner Boolean
+  wantToWorkAgain Boolean
+  Userid String //FK
+}
+
+model NotificationKeyword {
+id String @id @default(uuid())
+  keyword String? @db.VarChar(30)
+Userid String //FK
+}
+
+model Notification {
+id String @id @default(uuid())
+  content String? @db.LongText
+}
+
+//따라 다니는 쪽에 FK 넣어줌 먼저 생긴애 말고
