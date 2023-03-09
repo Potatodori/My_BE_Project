@@ -29,7 +29,7 @@ model User{
   name String @db.Char(30)
   phonenum String @db.Char(11)
   selfIntroduce String @db.LongText
-  birthday DateTime
+  birthday String @db.Char(10)
   address String @db.Char(60)
   employeeReviews EmployeeReview[]
   userImages UserImage[]

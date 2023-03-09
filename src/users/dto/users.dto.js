@@ -1,4 +1,4 @@
-export class UserDTO {
+export class UsersDTO {
   id;
   loginID;
   password;
@@ -7,6 +7,7 @@ export class UserDTO {
   phonenum;
   selfIntroduce;
   birthday;
+  address;
 
   constructor(user) {
     this.id = user.id;
@@ -17,5 +18,6 @@ export class UserDTO {
     this.phonenum = user.phonenum;
     this.selfIntroduce = user.selfIntroduce;
     this.birthday = user.birthday;
+    this.address = user.address;
   }
 }
