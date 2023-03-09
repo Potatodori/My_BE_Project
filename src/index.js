@@ -2,6 +2,9 @@ import express, { Router } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import Controllers from "./controllers";
+import dotenv from "dotenv";
+const config = dotenv.config();
+config.parsed();
 
 const app = express();
 
