@@ -1,8 +1,9 @@
-import express, { Router } from "express";
+import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import Controllers from "./controllers";
+import { Controllers } from "./models";
 import database from "./database";
+import { jwtAuth } from "./middleware";
 
 (async () => {
   const app = express();
@@ -13,6 +14,7 @@ import database from "./database";
   app.use(helmet());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true, limit: "700mb" }));
+  app.use(jwtAuth);
 
   // app.use("/users", UserController.router);
 

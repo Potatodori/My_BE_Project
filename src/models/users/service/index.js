@@ -1,7 +1,19 @@
-import database from "../../database";
+import database from "../../../database";
 
 export class UserService {
   //findById, findMany, create, update, delete
+
+  async checkUserByloginID(loginID) {
+    const user = await database.user.findUnique({
+      where: {
+        loginID,
+      },
+    });
+
+    if (!user) return false;
+
+    return user;
+  }
 
   async findUserById(id) {
     const user = await database.user.findUnique({
@@ -63,6 +75,7 @@ export class UserService {
         phonenum: props.phonenum,
         selfIntroduce: props.selfIntroduce,
         address: props.address,
+        password: props.password,
       },
     });
   }
