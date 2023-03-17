@@ -1,6 +1,14 @@
 import database from "../../../database";
+import { UserService } from "../../users/service";
+import { CategoryService } from "../../task_categories/service";
 
 export class TaskService {
+  userService;
+  categoryService;
+  constructor() {
+    this.userService = new UserService();
+    this.categoryService = new CategoryService();
+  }
   //findById, findMany, create, update, delete
 
   async findTaskById(id) {
@@ -29,18 +37,34 @@ export class TaskService {
     };
   }
 
+  // props : CreateTaskDTO
   async createTask(props) {
+    const user = await this.userService.findUserById(props.userId);
+
+    const taskCategory = await this.categoryService.findCategoryById(
+      props.taskCategoryId
+    );
+
     const newTask = await database.task.create({
       data: {
         title: props.title,
         time: props.time,
         cost: props.cost,
         description: props.description,
-        detailAddress: props.detailAddress,
         address: props.address,
+        detailAddress: props.detailAddress,
         isFinished: props.isFinished,
-        createdAt: props.createdAt,
         TaskEmployee: props.TaskEmployee,
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        taskCategory: {
+          connect: {
+            id: taskCategory.id,
+          },
+        },
       },
     });
 

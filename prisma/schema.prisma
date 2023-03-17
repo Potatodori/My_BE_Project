@@ -36,9 +36,9 @@ model User{
   tasks Task[]
   notificationKeywords NotificationKeyword[]
   taskNotifications TaskNotification[]
-  todoWork TodoWork?
   chattingMessages ChattingMessage[]
   chattingRooms ChattingRoom[]
+  todoWorks TodoWork[]
 }
 
 model EmployeeReview{
@@ -83,7 +83,7 @@ description String @db.LongText
 detailAddress String @db.VarChar(300)
 isFinished Boolean
 createdAt DateTime @default(now())
-TaskEmployee String @db.VarChar(100)
+TaskEmployee String? @db.VarChar(100)
 address String @db.Char(60)
 //유저와 다대1,카테고리와 1대다
 userId String //FK
@@ -91,9 +91,9 @@ user User @relation( fields: [ userId], references: [ id])
 taskCategoryId String //FK
 taskCategory TaskCategory @relation( fields: [ taskCategoryId], references: [ id])
 employeeReviews EmployeeReview[]
-todoWork TodoWork?
 taskImages TaskImage[]
 chattingRooms ChattingRoom[]
+todoWorks TodoWork[]
 }
 
 model NotificationKeyword{
@@ -115,12 +115,12 @@ user User @relation( fields: [ userId], references: [ id])
 }
 
 model TodoWork{
-id String @id @default(uuid())
-//알바 회원과 1대1
-userId String @unique//FK
+userId String
 user User @relation( fields: [ userId], references: [ id])
-taskId String @unique//FK
+taskId String
 task Task @relation( fields: [ taskId], references: [ id])
+
+@@id([userId, taskId])
 }
 
 model ChattingMessage{

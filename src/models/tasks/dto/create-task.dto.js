@@ -4,16 +4,22 @@ export class CreateTaskDTO {
   cost;
   description;
   address;
-  detailaddress;
+  detailAddress;
   isFinished;
+  TaskEmployee;
+  userId;
+  taskCategoryId;
 
-  constructor(task) {
-    (this.title = task.title),
-      (this.time = task.time),
-      (this.cost = task.cost),
-      (this.description = task.description),
-      (this.address = task.address),
-      (this.detailaddress = task.description),
-      (this.isFinished = task.isFinished);
+  constructor(props) {
+    (this.title = props.title),
+      (this.time = props.time),
+      (this.cost = props.cost),
+      (this.description = props.description),
+      (this.address = props.address),
+      (this.detailAddress = props.detailAddress),
+      (this.isFinished = props.isFinished),
+      (this.TaskEmployee = undefined),
+      (this.userId = props.userId),
+      (this.taskCategoryId = props.taskCategoryId);
   }
 }

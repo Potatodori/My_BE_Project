@@ -29,9 +29,7 @@ class TaskController {
         take: req.take,
       });
 
-      res
-        .status(200)
-        .json({ tasks: tasks.map((task) => new TasksDTO(task)), count });
+      res.status(200).json({ tasks, count });
     } catch (err) {
       next(err);
     }
@@ -50,9 +48,23 @@ class TaskController {
 
   async createTask(req, res, next) {
     try {
-      const createTaskDto = new CreateTaskDTO(req.body);
+      if (!req.user) throw { status: 401, message: "로그인을 진행해주세요." };
+      const body = req.body;
 
-      const newTaskId = await this.taskService.createTask(createTaskDto);
+      const newTaskId = await this.taskService.createTask(
+        new CreateTaskDTO({
+          title: body.title,
+          time: body.time,
+          cost: body.cost,
+          description: body.description,
+          address: body.address,
+          detailAddress: body.detailAddress,
+          isFinished: body.isFinished,
+          TaskEmployee: body.isFinished,
+          userId: req.user.id,
+          taskCategoryId: body.taskCategoryId,
+        })
+      );
 
       res.status(201).json({ id: newTaskId });
     } catch (err) {
